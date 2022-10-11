@@ -21,6 +21,7 @@ public class Empleado extends Persona{
     Conexion cn;
     public Empleado(){
     }
+    
     public Empleado(String dpi, String fecha_nacimiento, String fecha_inicio_labores, String fecha_ingreso, int id_puesto, int id_empleado, String nombres, String apellidos, String direccion, String telefono, String genero) {
         super(nombres, apellidos, direccion, telefono, genero);
         this.dpi = dpi;
@@ -119,5 +120,94 @@ public class Empleado extends Persona{
   }
   return tabla;
   }
+    
+
+    //Funcion Crear
+    @Override
+    public int crear(){
+    int retorno=0;
+        
+        try{
+         PreparedStatement parametro;
+         cn = new Conexion();
+         
+         String query;
+            query = "INSERT INTO empleados(nombres,apellidos,direccion,telefono,dpi,genero,fecha_nacimiento,idPuesto,fecha_inicio_labores,fechaingreso)  VALUES (?,?,?,?,?,?,?,?,?,?);";
+         cn.abrir_con();
+            parametro  = (PreparedStatement) cn.conexionBD.prepareStatement(query);
+         parametro.setString(1, getNombres());
+         parametro.setString(2, getApellidos());
+         parametro.setString(3, getDireccion());
+         parametro.setString(4, getTelefono());
+         parametro.setString(5, getDpi());
+         parametro.setString(6, getGenero());
+         parametro.setString(7, getFecha_nacimiento());
+         parametro.setInt(8, this.getId_puesto());
+         parametro.setString(9, getFecha_inicio_labores());
+         parametro.setString(10, getFecha_ingreso());
+         int executar= parametro.executeUpdate();
+         retorno = executar;
+         cn.cerrar_con();
+     }catch(HeadlessException | SQLException ex){
+         System.out.println("Error"+ex.getMessage());
+         }
+        
+        return retorno;
+    }
+    
+    //Funcion Modificar
+    @Override
+    public int modificar(){
+    int retorno=0;
+        
+        try{
+         PreparedStatement parametro;
+         cn = new Conexion();
+         cn.abrir_con();
+         String query;
+            query = "update empleados set nombres=?,apellidos=?,apellidos=?,direccion=?,telefono=?,dpi=?,genero=?,fecha_nacimiento=?,idPuesto=?,fecha_inicio_labores=?,fechaingreso=? where idempleado=?;";
+         parametro  = (PreparedStatement) cn.conexionBD.prepareStatement(query);
+         parametro.setString(1, getNombres());
+         parametro.setString(2, getApellidos());
+         parametro.setString(3, getDireccion());
+         parametro.setString(4, getTelefono());
+         parametro.setString(5, getDpi());
+         parametro.setString(6, getGenero());
+         parametro.setString(7, getFecha_nacimiento());
+         parametro.setInt(8, this.getId_puesto());
+         parametro.setString(9, getFecha_inicio_labores());
+         parametro.setString(10, getFecha_ingreso());
+         parametro.setInt(11, getId_empleado());
+         int executar= parametro.executeUpdate();
+         retorno = executar;
+         cn.cerrar_con();
+             }catch(HeadlessException | SQLException ex){
+         System.out.println("Error"+ex.getMessage());
+         }
+        
+        return retorno;
+    }
+    //Funcion Eliminar
+    @Override
+    public int eliminar(){
+    int retorno=0;
+        
+        try{
+         PreparedStatement parametro;
+         cn = new Conexion();
+         cn.abrir_con();
+         String query;
+            query = "delete from empleados where idempleado=?;";
+         parametro  = (PreparedStatement) cn.conexionBD.prepareStatement(query);
+         parametro.setInt(1, getId_empleado());
+         int executar= parametro.executeUpdate();
+         retorno = executar;
+         cn.cerrar_con();
+        }catch(HeadlessException | SQLException ex){
+         System.out.println("Error"+ex.getMessage());
+         }
+        
+        return retorno;
+    }
     
 }

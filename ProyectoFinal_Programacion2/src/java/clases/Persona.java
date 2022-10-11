@@ -10,9 +10,10 @@ package clases;
  */
 abstract class Persona {
     private String nombres, apellidos, direccion, telefono, genero;
-
+    
     public Persona(){
     }
+
     public Persona(String nombres, String apellidos, String direccion, String telefono, String genero) {
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -21,8 +22,6 @@ abstract class Persona {
         this.genero = genero;
     }
 
-    
-    
     public String getNombres() {
         return nombres;
     }

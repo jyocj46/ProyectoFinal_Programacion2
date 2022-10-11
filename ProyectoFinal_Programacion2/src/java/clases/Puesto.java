@@ -41,7 +41,7 @@ public class Puesto {
     public void setId_puesto(int id_puesto) {
         this.id_puesto = id_puesto;
     }
-    
+    //Drop_Puesto
     public HashMap drop_puesto(){
         HashMap<String,String> drop = new HashMap();
         
@@ -64,25 +64,20 @@ public class Puesto {
         
         }
     
-    
-    
-    
-    
-    
-    
+    //Tabla Leer
     public DefaultTableModel leer(){
     DefaultTableModel tabla = new DefaultTableModel();
     try{
    cn = new Conexion();
    cn.abrir_con();
     String query;
-    query = "SELECT e.idPuesto as  id,e.puesto FROM puestos as e inner join puestos;";
+    query = "SELECT idPuesto as id,puesto FROM puestos;";
      ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
       
       String encabezado[] = {"id","puesto"};
       tabla.setColumnIdentifiers(encabezado);
       
-      String datos[]=new String[1];
+      String datos[]=new String[2];
       
    while(consulta.next()){
       datos[0] = consulta.getString("id");
@@ -99,7 +94,7 @@ public class Puesto {
   }
     return tabla;
     }
-    
+    //Funcion Crear
     public int crear(){
     int retorno=0;
         
@@ -121,4 +116,50 @@ public class Puesto {
         
         return retorno;
     }
+    
+    //Funcion Modificar
+    public int modificar(){
+    int retorno=0;
+        
+        try{
+         PreparedStatement parametro;
+         cn = new Conexion();
+         cn.abrir_con();
+         String query;
+            query = "update puestos set puesto=? where idPuesto=?;";
+         parametro  = (PreparedStatement) cn.conexionBD.prepareStatement(query);
+         parametro.setString(1, getPuesto());
+         parametro.setInt(2, getId_puesto());
+         int executar= parametro.executeUpdate();
+         retorno = executar;
+         cn.cerrar_con();
+             }catch(HeadlessException | SQLException ex){
+         System.out.println("Error"+ex.getMessage());
+         }
+        
+        return retorno;
+    }
+    
+    //Funcion Eliminar
+    public int eliminar(){
+    int retorno=0;
+        
+        try{
+         PreparedStatement parametro;
+         cn = new Conexion();
+         cn.abrir_con();
+         String query;
+            query = "delete from puestos where idPuesto=?;";
+         parametro  = (PreparedStatement) cn.conexionBD.prepareStatement(query);
+         parametro.setInt(1, getId_puesto());
+         int executar= parametro.executeUpdate();
+         retorno = executar;
+         cn.cerrar_con();
+        }catch(HeadlessException | SQLException ex){
+         System.out.println("Error"+ex.getMessage());
+         }
+        
+        return retorno;
+    }
+    
 }

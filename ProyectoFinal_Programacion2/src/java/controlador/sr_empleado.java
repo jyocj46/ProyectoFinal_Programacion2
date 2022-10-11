@@ -38,16 +38,17 @@ public class sr_empleado extends HttpServlet {
             out.println("<title>Servlet sr_empleado</title>");            
             out.println("</head>");
             out.println("<body>");
+            
             empleado = new Empleado(request.getParameter("txt_dpi"),request.getParameter("txt_Fn"),request.getParameter("txt_Fechain"),request.getParameter("txt_Fechai"),Integer.valueOf(request.getParameter("dr_puesto")),Integer.valueOf(request.getParameter("txt_idempleado")),request.getParameter("txt_nombre"),request.getParameter("txt_apellidos"),request.getParameter("txt_Direccion"),request.getParameter("txt_Telefono"),request.getParameter("txt_genero"));
             
             //Agregar
             if("agregar".equals(request.getParameter("btn_agregar"))){
             if(empleado.crear()>0){
            out.println("<h1> Ingreso Exitoso...</h1>");
-           out.println("<a href='index.jsp'>Regresar...</a>");
+           out.println("<a href='empleado.jsp'>Regresar...</a>");
             }else{
                 out.println("<h1> XXXXX Error XXXXX</h1>");
-                out.println("<a href='index.jsp'>Regresar...</a>");
+                out.println("<a href='empleado.jsp'>Regresar...</a>");
             }
                 }
             
@@ -55,10 +56,10 @@ public class sr_empleado extends HttpServlet {
             if("modificar".equals(request.getParameter("btn_modificar"))){
             if(empleado.modificar()>0){
            out.println("<h1> Cambio Exitoso...</h1>");
-           out.println("<a href='index.jsp'>Regresar...</a>");
+           out.println("<a href='empleado.jsp'>Regresar...</a>");
             }else{
                 out.println("<h1> XXXXX Error XXXXX</h1>");
-                out.println("<a href='index.jsp'>Regresar...</a>");
+                out.println("<a href='empleado.jsp'>Regresar...</a>");
             }
                 }
             
@@ -66,10 +67,10 @@ public class sr_empleado extends HttpServlet {
             if("eliminar".equals(request.getParameter("btn_eliminar"))){
             if(empleado.eliminar()>0){
            out.println("<h1> Datos eliminados...</h1>");
-           out.println("<a href='index.jsp'>Regresar...</a>");
+           out.println("<a href='empleado.jsp'>Regresar...</a>");
             }else{
                 out.println("<h1> XXXXX Error XXXXX</h1>");
-                out.println("<a href='index.jsp'>Regresar...</a>");
+                out.println("<a href='empleado.jsp'>Regresar...</a>");
             }
                 }
             
